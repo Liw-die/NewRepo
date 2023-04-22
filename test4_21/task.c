@@ -208,6 +208,11 @@ DLIST odd_find(DLIST head)
 	return NULL;
 }
 
+//head->prev进行遍历，如果发现有偶数，就先将其在链表中删除，在将其插入到尾部
+void _node_date_point(DLIST head)
+{
+	
+
 int main()
 {
 	DLIST p=NULL;
