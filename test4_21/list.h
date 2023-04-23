@@ -17,13 +17,13 @@
  * @member:	the name of the member within the struct.
  *
  */
- /**
-*container_of-将结构的成员强制转换为包含结构
-*@ptr：指向成员的指针。
-*@type：它所嵌入的容器结构的类型。
-*@member：结构中成员的名称。
-*
-*/
+/**
+ * container_of - 将结构体中的一个成员指针转换为包含该成员的结构体指针
+ * @ptr:	指向该成员的指针
+ * @type:	包含该成员的结构体类型
+ * @member:	该成员在结构体中的成员名
+ *
+ */
 #define container_of(ptr, type, member) ({				\
 	void *__mptr = (void *)(ptr);					\
 	_Static_assert(__same_type(*(ptr), ((type *)0)->member) ||	\
@@ -44,15 +44,13 @@
  * using the generic single-entry routines.
  */
  /*
-*循环双链表实现。
-*
-*某些内部函数（“__xxx”）在以下情况下很有用
-*操作整个列表而不是单个条目
-*有时我们已经知道下一个/上一个条目，我们可以
-*直接使用它们生成更好的代码，而不是
-*使用通用的单条目例程。
-*/
-
+ * 循环双向链表的实现。
+ *
+ * 一些内部函数（“__xxx”）在操作整个链表而不是单个条目时非常有用，
+ * 因为有时我们已经知道下一个/上一个条目，我们可以直接使用它们而不是使用通用的单个条目例程，
+ * 从而生成更好的代码。
+ */
+ 
 struct list_head {
 	struct list_head *next, *prev;
 };
@@ -70,13 +68,13 @@ struct list_head {
  * the result is an empty list.
  */
  /**
-*INIT_LIST_HEAD-初始化LIST_HEAD结构
-*@list:要初始化的list_head结构。
-*
-*初始化list_head以指向其自身。如果它是列表报头，
-*结果是一个空列表。
-*/
-static inline void INIT_LIST_HEAD(struct list_head *list)
+/**
+ * INIT_LIST_HEAD - 初始化一个 list_head 结构体
+ * @list: 要初始化的 list_head 结构体。
+ *
+ * 将 list_head 初始化为指向自身。如果它是一个列表头，则结果是一个空列表。
+ */
+ inline void INIT_LIST_HEAD(struct list_head *list)
 {
 	list->next = list;
 	list->prev = list;
@@ -87,6 +85,11 @@ static inline void INIT_LIST_HEAD(struct list_head *list)
  *
  * This is only for internal list manipulation where we know
  * the prev/next entries already!
+ */
+ /*
+ * 在两个已知的连续条目之间插入一个新条目。
+ *
+ * 这仅用于已知 prev/next 条目的内部链表操作！
  */
  /*
 *在两个已知的连续条目之间插入一个新条目。
@@ -224,12 +227,12 @@ static inline int list_empty(const struct list_head *head)
  * @type:	the type of the struct this is embedded in.
  * @member:	the name of the list_head within the struct.
  */
- /**
-*list_entry-获取此条目的结构
-*@ptr：&struct list_head指针。
-*@type：它所嵌入的结构的类型。
-*@member：结构中list_head的名称。
-*/
+/**
+ * list_entry - 获取包含该节点的结构体指针
+ * @ptr:	指向该节点的 &struct list_head 指针
+ * @type:	包含该节点的结构体类型
+ * @member:	该节点在结构体中的成员名
+ */
 #define list_entry(ptr, type, member) \
 	container_of(ptr, type, member)
 
