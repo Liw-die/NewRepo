@@ -1,22 +1,5 @@
 #include "list.h"
-#include <curses.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "STU.h"
-#define uint_32 unsigned int 
-#define COO_X 20 //外框的原点坐标X
-#define COO_Y 5	 //外框的原点坐标y
-
-// #define STU_STR "STU_MAN_SYSTEM"
-// #define STU_WELCOME "     Welcome to the Student Management System   "
-// #define STU_1	    "                                                "
-// #define STU_INCER 	" Increase student Information "
-// #define STU_QUERY 	" Query    Student Information "
-// #define STU_FIND 	" Find     Student Information "
-// #define STU_MODIFY 	" Modify   Student Information "
-// #define STU_INTE 	"-->"
-// #define STU_CHAR 	4
 int stu_ch[4]={4,5,6,7};
 int N[4]={0,1,2,3};
 int *p=N;
@@ -144,7 +127,7 @@ void key_show_inte()
 								if(pos->id==id)
 								{
 									list_del(&pos->list);
-									free(&pos->list);
+									//free(&pos->list);
 									Clear_screen();//先清屏
 									
 									
@@ -168,7 +151,7 @@ void key_show_inte()
 							attroff(A_BOLD);//关闭加粗
 							attroff(COLOR_PAIR(4));
 							getch();
-							goto end_while;
+							goto end_delete;
 						}
 						end_delete:
 						continue;
