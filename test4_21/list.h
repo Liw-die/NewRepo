@@ -157,12 +157,11 @@ static inline void list_add_tail(struct list_head *new, struct list_head *head)
  * the prev/next entries already!
  */
  /*
-*通过创建上一个/下一个条目来删除列表条目
-*相互指向。
-*
-*这只适用于我们知道的内部列表操作
-*上一个/下一个条目已经存在！
-*/
+ * 通过使 prev/next 条目相互指向来删除一个列表条目。
+ *
+ * 这仅用于已知 prev/next 条目的内部链表操作！
+ */
+
 static inline void __list_del(struct list_head *prev, struct list_head *next)
 {
 	next->prev = prev;
