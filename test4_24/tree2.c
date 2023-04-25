@@ -198,11 +198,11 @@ void show(DTREE root)
 
 int main()
 {
-	int arr[8]={50,40,60,30,45,55,42,57};
+	int arr[9]={8,3,10,1,6,14,4,7,13};
 	DTREE root=create_root(arr[0]);
 	
 	int i;
-	for(i=1;i<8;i++)
+	for(i=1;i<9;i++)
 	{
 		DTREE node = create_root(arr[i]);
 		insert(root,node);
