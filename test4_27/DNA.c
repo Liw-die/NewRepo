@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define NUM 250
+#define NUM 1000
 
 typedef struct hash{
-	int arr;
+	char buf[5];
 	int cnt;
-	struct hash *next;//下一个节点的指针
 }Hash,*HASH;
 
 
 //创建无序数组
-int *get_arr()
+char *get_str()
 {
+	
+	char s[4] = {'A','T','C','G'};
 	int *arr =calloc(NUM,sizeof(int));
 	if(arr==NULL)
 	{
@@ -121,7 +122,7 @@ HASH create_hash(int *arr)
 			my_node->next = NULL;//指向空
 			temp->next=my_node;
 				
-		}
+			}
 	}
 
 

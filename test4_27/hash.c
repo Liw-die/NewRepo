@@ -97,6 +97,7 @@ int main(void)
 				
 				goto Scan;
 			}
+			
 			p=p->next;
 		}
 		if(p==NULL)

@@ -116,6 +116,19 @@ void insert_sort(LQUE que)
 	}
 }
 
+void bulling_sort(LQUE que)
+{
+	DNOED outer=que->front;
+	DNOED subcoat=que->last;
+	int temp;
+	while(outer!=NULL)
+	{
+		while(subcoat!=outer)
+		{
+			
+
+
+
 int main(void)
 {
 	int arr[10] = {5,6,4,9,7,3,8,1,2,0};
