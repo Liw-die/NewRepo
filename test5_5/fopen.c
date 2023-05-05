@@ -14,10 +14,12 @@ int main(void)
 		perror("open file failed!");
 		return -1;
 	}
-	char buf[25];
-	bzero(buf,sizeof(buf));
-	int ret=fread(buf,5,5,fp);
-	printf("ret=%d buf=%s\n",ret,buf);
+	char buf[24]="0123456789012345678901";
+	//bzero(buf,sizeof(buf));
+	//int ret=fread(buf,5,5,fp);
+	int ret=fwrite(buf,5,5,fp);
+	//printf("ret=%d buf=%s\n",ret,buf);
+	printf("ret=%d\n",ret);
 	fclose(fp);
 	return 0;
 }
