@@ -1,14 +1,41 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <string.h>
-#include <sys/mman.h>
+#include <strings.h>
+#define SIZE 1024
 
+void file_cp(const char *source_filename,const char *bourn_filename)
+{
+	FILE *fp_sou=fopen(source_filename,"r");
+	FILE *fp_bou=fopen(bourn_filename,"w");
+	if(fp_sou==NULL)
+	{
+		perror("你的源文件为空!");
+		fclose(fp_sou);
+		return ;
+	}
+	int ret,count;
+	fseek(fp_sou,0,SEEK_END);
+	int len=ftell(fp_sou);
+	ret=len/SIZE+1;
+	printf("%d %d\n",ret,len);
+	fseek(fp_sou,0,SEEK_SET);
+	int buf[SIZE];
+	while(ret)
+	{
+		fread(buf,SIZE,1,fp_sou);
+		count=fwrite(buf,SIZE,1,fp_bou);
+		printf("count=%d\n",count);
+		bzero(buf,sizeof(buf));
+		ret--;
+	}
+	fclose(fp_sou);
+	fclose(fp_bou);
+}
 int main(void)
 {
-	FILE *fp=fopen("1.txt","r+");
+	char sou_fil[15]= "ikun.txt";
+	char bou_fil[15]= "4.txt";
+	file_cp(sou_fil,bou_fil);
+/* 	FILE *fp=fopen("1.txt","a");
 	if(fp==NULL)
 	{
 		perror("open file failed!");
@@ -17,9 +44,10 @@ int main(void)
 	char buf[24]="0123456789012345678901";
 	//bzero(buf,sizeof(buf));
 	//int ret=fread(buf,5,5,fp);
-	int ret=fwrite(buf,5,5,fp);
+	//int ret=fwrite(buf,5,5,fp);
 	//printf("ret=%d buf=%s\n",ret,buf);
-	printf("ret=%d\n",ret);
-	fclose(fp);
+	int n=ftell(fp);
+	printf(" n=%d\n",n);
+	fclose(fp) */;
 	return 0;
 }
