@@ -49,7 +49,7 @@ void file_cp(const char *source_filename,const char *bourn_filename)
 	{
 		i++;
 		printf("res=%d写入完成->%d\n",res,i);
-		if((te=write(fd_bou,temp,SIZ))!=res)
+		if((te=write(fd_bou,temp,res))!=SIZ)
 		{
 			printf("te=%d写入完成!\n",te);
 			close(fd_sou);
