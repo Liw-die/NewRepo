@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <strings.h>
+#include <string.h>
 #define SIZE 1024
 
 void file_cp(const char *source_filename,const char *bourn_filename)
@@ -15,10 +16,10 @@ void file_cp(const char *source_filename,const char *bourn_filename)
 	int ret,count;
 	fseek(fp_sou,0,SEEK_END);
 	int len=ftell(fp_sou);
-	ret=len/SIZE+1;
+	ret=len/SIZE;
 	printf("%d %d\n",ret,len);
 	fseek(fp_sou,0,SEEK_SET);
-	int buf[SIZE];
+	char buf[SIZE+1];
 	while(ret)
 	{
 		fread(buf,SIZE,1,fp_sou);
@@ -27,6 +28,10 @@ void file_cp(const char *source_filename,const char *bourn_filename)
 		bzero(buf,sizeof(buf));
 		ret--;
 	}
+	bzero(buf,sizeof(buf));
+	ret=fread(buf,1,SIZE,fp_sou);
+	count=fwrite(buf,ret,1,fp_bou);
+	printf("count=%d\n",count);
 	fclose(fp_sou);
 	fclose(fp_bou);
 }
