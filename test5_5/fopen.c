@@ -14,10 +14,10 @@ int main(void)
 		perror("open file failed!");
 		return -1;
 	}
-	else
-	{
-		printf("打开文件成功!\n");
-		fclose(fp);
-	}
+	char buf[25];
+	bzero(buf,sizeof(buf));
+	int ret=fread(buf,5,5,fp);
+	printf("ret=%d buf=%s\n",ret,buf);
+	fclose(fp);
 	return 0;
 }
