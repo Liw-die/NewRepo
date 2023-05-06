@@ -65,8 +65,8 @@ void list_del(ISRCTN dest)
 	_list_del(dest->prev,dest->next);
 	//free(dest);//释放要删除的节点的空间
 }
-//查找节点,没找到返回head节点
-ISRCTN find_node(ISRCTN head,const char *user)
+//通过user查找节点,没找到返回head节点
+ISRCTN find_user(ISRCTN head,const char *user)
 {
 	ISRCTN temp=head->next;
 	while(temp!=head)
@@ -77,10 +77,22 @@ ISRCTN find_node(ISRCTN head,const char *user)
 	}
 	return temp;
 }
+//通过id查找节点,没找到返回head节点
+ISRCTN find_id(ISRCTN head,unsigned int id)
+{
+	ISRCTN temp=head->next;
+	while(temp!=head)
+	{
+		if(temp->id==id)
+			break;
+		temp=temp->next;
+	}
+	return temp;
+}
 //修改节点内的数据,只修改密码
 void change_node(ISRCTN head,const char *user,const char *pass)
 {
-	ISRCTN temp=find_node(head,user);
+	ISRCTN temp=find_user(head,user);
 	if(temp==head)
 		printf("修改时查找失败");
 	else
@@ -126,7 +138,7 @@ void show()//界面显示
 	printf("----- 1.注册   2登录  0退出 -----\n");
 	printf("---------------------------------\n");
 }
-
+//注册
 void user_show(ISRCTN head)
 {
 	char user[12]={0};
@@ -135,9 +147,35 @@ void user_show(ISRCTN head)
 	scanf("%s %s",user,pass);
 	ISRCTN node=create_node(user,ID,pass);
 	jion_last(head,node);
-	printf("注册成功你的账号是%d",ID);
+	printf("注册成功你的账号是%d\n",ID);
 	ID++;
 }
+//登录
+int longin_show(ISRCTN head)
+{
+	unsigned int id;
+	char pass[25];
+	printf("输入你的ID与密码!\n");
+	scanf("%d %s",&id,pass);
+	ISRCTN temp=NULL;
+	temp=find_id(head,id);
+	if(temp==head)
+	{
+		printf("你的id不存在!\n");
+		return -1;
+	}
+	if(!(strcmp(temp->pass,pass)))
+	{
+		printf("登录成功!\n");
+		return 1;
+	}
+	else if(strcmp(temp->pass,pass))
+	{
+		printf("密码错误!\n");
+		return -1;
+	}
+}
+//文件入链
 void load_file(const char *sou_file,ISRCTN head)
 {
 	FILE *fp=fopen(sou_file,"r+");
@@ -150,27 +188,55 @@ void load_file(const char *sou_file,ISRCTN head)
 	char user[12]={0};
 	int id;
 	char pass[25]={0};
-	int ret=fread(user,1,10,pd);
+	int n;
+	fscanf(fp,"%[^\t]\t%d\t%s",user,&n,pass);
+	printf("%d\n",n);
+	
 	bzero(user,sizeof(user));
 	bzero(pass,sizeof(pass));
-	while(ret)
+	while(n)
 	{
-		for(int i=0;i < head->id;i++)
+		
+		for(int i=0;i < n;i++)
 		{
-			fscanf(fp,"%[^\t]%d\t%s",user,&id,pass);
+			fscanf(fp,"%s\t%d\t%s",user,&id,pass);
+			printf("%s %d %s\n",user,id,pass);
 			ISRCTN node=create_node(user,id,pass);
 			jion_last(head,node);
 			bzero(user,sizeof(user));
 			bzero(pass,sizeof(pass));
 		}
-		ID=id;
+		ID=id+1;
 		break;
 	}
+	if(n==0)
+		printf("空文件\n");
+	fclose(fp);
 }	
+//链表输出到文件
+void output_file(const char *sou_file,ISRCTN head)
+{
+	FILE *fp=fopen(sou_file,"w+");
+	if(fp==NULL)
+	{
+		perror("error!");
+		fclose(fp);
+		return ;
+	}
+	fprintf(fp,"%s\t%d\t%s\n",head->user,head->id,head->pass);
+	ISRCTN p=head->next;
+	while(p!=head)
+	{
+		fprintf(fp,"%s\t%d\t%s\n",p->user,p->id,p->pass);
+		p=p->next;
+	}
+	fclose(fp);
+}
 int main(void)
 {
 	int input;
 	ISRCTN head=create_head();
+	load_file("6.txt",head);
 	while(1)
 	{
 		show();
@@ -183,11 +249,12 @@ int main(void)
 				user_show(head);
 				continue;
 			case 2:
-				longin_show();
+				longin_show(head);
 				continue;
 		}
+		break;
 	}
-	
+	output_file("6.txt",head);
 /* 	ISRCTN head=create_head();
 	char user[12]="12345678901";
 	char id[9]="12345678";
@@ -199,5 +266,6 @@ int main(void)
 	}
 	show_last(head);
 	dlist_destory(head); */
+	dlist_destory(head);
 	return 0;
 }
