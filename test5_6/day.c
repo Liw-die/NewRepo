@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 
-void GetMemory(char** p,unsigned int size)
+void GetMemory(char* p,unsigned int size)
 {
-	*p=(char*)malloc(size);
+	p=(char*)malloc(size);
 	printf("no \n");
 	return ;
 }
@@ -14,7 +14,7 @@ void GetMemory(char** p,unsigned int size)
 void main (void)
 {
 	char*str=NULL;
-	GetMemory(&str,100);
+	GetMemory(str,100);
 	printf("no \n");
 	strcpy(str,"Anyka is a hi-tech company.");
 	printf("no \n");
