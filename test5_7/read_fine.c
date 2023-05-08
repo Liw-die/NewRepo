@@ -62,6 +62,7 @@ HASH *fine_read(char *finename)
 	}
 
 	int key;
+	int n='A'-'a';
 
 	while(fgets(arr,1024,fp))
 	{
@@ -69,13 +70,14 @@ HASH *fine_read(char *finename)
 		token = strtok(arr, " ,.;?!-\n");
 		while (token != NULL) 
 		{
-			//printf("%s\n", token);
 			key=token[0];
+			printf("%c\n", key);
 			if((key<'A'||key>'Z')&&(key<'a'||key>'z'))
 				goto _step;
 			if(key>='A'&&key<='Z')
-				token[0]-='a';
+				key-=n;
 			key=key%'a';
+			printf("%c\n", key);
 			HASH node=create_node(token,0);
 			join_last(h[key],node);
 			_step:
@@ -98,7 +100,7 @@ int main(void)
 		HASH p=h[i]->next;
 		while(p!=NULL)
 		{
-			printf("%s ",p->arr);
+			//printf("%s ",p->arr);
 			p=p->next;
 		}
 		//printf("\n");
