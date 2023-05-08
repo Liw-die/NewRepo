@@ -284,35 +284,33 @@ ISRCTN create_dir(ISRCTN head,const char *dirname,const char *filename)
 	closedir(pd);
 	return node;
 }
+
 //链表内数据存储到目录内的文件夹下
 void stor_file(ISRCTN head,const char *dirname)
 {
-	DIR *pd=opendir(dirname);
-	if(pd==NULL)
-	{
-		printf("目录不存在\n");
-		mkdir(dirname,0777);
-		printf("创建目录成功\n");
-	}
+	char n[50]={0};
+	getcwd(n,sizeof(n));
+	printf("%s\n",n);
 	ISRCTN p=head->next;
 	printf("ggg\n");
 	while(p!=head)
 	{
 		char file[30]={0};
-		char *arr=(char *)p->id;
-		stpcpy(file,arr);
+		printf("ggg\n");
+		sprintf(file, "%d", p->id);
 		int len=strlen(file);
-		file[len-1]='.';
-		file[len]='t';
-		file[len+1]='x';
-		file[len+2]='t';
-		mkdir(file,0777);
-		FILE *fp=fopen(file,"w+");
+		file[len]='.';
+		file[len+1]='t';
+		file[len+2]='x';
+		file[len+3]='t';
+		printf("%s\n",file);
+		char ppp[10]={0};
+		strcpy(ppp,file);
+		FILE *fp=fopen(ppp,"w+");
 		fprintf(fp,"%s\t%d\t%s\n",p->user,p->id,p->pass);
 		p=p->next;
 		fclose(fp);
 	}
-	closedir(pd);
 }
 int main(void)
 {
@@ -322,11 +320,11 @@ int main(void)
 	//load_file("6.txt",head);
 	char dir[50]={0};
 	char file[50]={0};
-	printf("请输入要打开的目录->");
-	scanf("%s",dir);
-	printf("请输入要打开的文件->");
-	scanf("%s",file);
-	ISRCTN node=create_dir(head,dir,file);
+	//printf("请输入要打开的目录->");
+	//scanf("%s",dir);
+	//printf("请输入要打开的文件->");
+	//scanf("%s",file);
+	ISRCTN node=create_dir(head,"zhanghao","22056.txt");
 	while(1)
 	{
 		show();
@@ -345,7 +343,7 @@ int main(void)
 		}
 		break;
 	}
-	stor_file(head,dir);
+	stor_file(head,"zhanghao");
 	//output_file("6.txt",head);
 	dlist_destory(head);
 	return 0;
