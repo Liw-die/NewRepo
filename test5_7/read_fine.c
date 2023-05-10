@@ -71,22 +71,18 @@ HASH *fine_read(char *finename)
 		while (token != NULL) 
 		{
 			key=token[0];
-			printf("%c\n", key);
 			if((key<'A'||key>'Z')&&(key<'a'||key>'z'))
 				goto _step;
 			if(key>='A'&&key<='Z')
 				key-=n;
 			key=key%'a';
-			printf("%c\n", key);
 			HASH node=create_node(token,0);
 			join_last(h[key],node);
 			_step:
 			token = strtok(NULL, " ,.;?!-\n");
 		} 
-		//printf("gg\n");
 		bzero(arr,sizeof(arr));
 	}
-	//printf("gg\n");
 	fclose(fp);
 	return h;
 }
@@ -100,10 +96,10 @@ int main(void)
 		HASH p=h[i]->next;
 		while(p!=NULL)
 		{
-			//printf("%s ",p->arr);
+			printf("%s ",p->arr);
 			p=p->next;
 		}
-		//printf("\n");
+		printf("\n");
 	}
 	return 0;
 }

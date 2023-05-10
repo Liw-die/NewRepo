@@ -9,7 +9,7 @@ int main(int avgc,const char *argv[])
 	a++;
 	b=100;
 	c=(char)++a;
-	//e=(++d)++;
+	e=(++d)++;
 	printf("a=%d b=%d c=%d d=%d e=%d\n",a,b,c,d,e);
 	return 0;
 }

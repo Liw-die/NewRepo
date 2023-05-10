@@ -1,8 +1,8 @@
-MAIN_PATH = src/*.c
+MAIN_PATH = src/*.c 
 MAIN_BIN  = bin/main
 INCLUDE   = -I inc/
 FUNCTTON  = $(wildcard fun/*.c)
-FUNC_OBJ  = $(patsubst %.c,%.o,$(FUNCTION))
+FUNC_OBJ  = $(patsubst %.c,%.o,$(FUNCTTON))
 LIB_PATH  = lib/libfunc.a
 LIBRARY   = -L lib/ -lfunc
 
@@ -16,4 +16,4 @@ $(LIB_PATH):$(FUNC_OBJ)
 clean:
 	rm $(MAIN_BIN)
 	rm $(LIB_PATH)
-	rm $(FUNC_BOJ)
+	rm $(FUNC_OBJ)
