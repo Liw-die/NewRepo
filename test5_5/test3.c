@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <strings.h>
-#include <string.h>
+//#include <strings.h>
+//#include <string.h>
 #include <stdlib.h>
 int ID=20230000;
 
